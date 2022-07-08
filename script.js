@@ -13,7 +13,9 @@ image.src = './Image/Pellet Town.png'
 const playerImage = new Image()
 playerImage.src = './Image/playerDown.png'
 
-image.onload = ()=>{
+
+function animate(){
+    window.requestAnimationFrame(animate)
     ctx.drawImage(image,-1425,-490)
     ctx.drawImage(
         playerImage,
@@ -27,3 +29,21 @@ image.onload = ()=>{
         playerImage.height,// actually height,scale rate
     )
 }
+animate()
+
+window.addEventListener('keydown',(e)=>{
+    switch (e.key){
+        case 'w':
+            console.log(e.key)
+            break
+        case 'a':
+            console.log(e.key)
+            break
+        case 's':
+            console.log(e.key)
+            break
+        case 'd':
+            console.log(e.key)
+            break
+    }
+})
