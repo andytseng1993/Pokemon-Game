@@ -4,8 +4,14 @@ const ctx = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
 
-ctx.fillStyle = 'white'
-ctx.fillRect(0,0,canvas.width,canvas.height)
+
+/* collisions */
+const collisionsMap = []
+//weidth = 70 tiles, height = 40titles
+for(let i = 0; i <collisions.length ; i += 70){
+    collisionsMap.push(collisions.slice(i,i+70))
+}
+console.log(collisionsMap);
 
 const image = new Image()
 image.src = './Image/Pellet Town.png'
