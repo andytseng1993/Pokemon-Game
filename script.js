@@ -12,7 +12,35 @@ for(let i = 0; i <collisions.length ; i += 70){
     collisionsMap.push(collisions.slice(i,i+70))
 }
 console.log(collisionsMap);
+class Boundary{
+    static width = 51 //1 Tile is 51 pexel, cause 4.25*12 
+    static height = 51
+    constructor({position}){
+        this.position = position
+    }
+    draw(){
+        ctx.fillStyle = 'red'
+        ctx.fillRect(this.position.x,this.position.y,this.width,this.height)
+    }
+}
 
+const bounduries = []
+collisionsMap.forEach((row, i)=>{
+    row.forEach((tile, j) =>{
+        if(tile === 1025 ){
+            bounduries.push(
+                new Boundary ({
+                    position:{
+                        x: j*Boundary.width,
+                        y: i*Boundary.height
+                    }
+                })
+            ) 
+        }
+    })
+})
+
+console.log(bounduries);
 const image = new Image()
 image.src = './Image/Pellet Town.png'
 
