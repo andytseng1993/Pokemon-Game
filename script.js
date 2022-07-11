@@ -28,7 +28,7 @@ class Boundary{
 
 const offset={
     x: -1425,
-    y: -490
+    y: -520
 }
 
 const boundaries = []
@@ -114,14 +114,7 @@ const keys = {
     },
 }
 
-const testBoundary = new Boundary({
-    position: {
-        x:400,
-        y:400
-    }
-})
-
-const movables = [background,testBoundary] //all movable objects
+const movables = [background,...boundaries] //all movable objects
 
 function rectangularCollision({rectangle1,rectangle2}){
     return(
@@ -135,35 +128,105 @@ function rectangularCollision({rectangle1,rectangle2}){
 function animate(){
     window.requestAnimationFrame(animate)
     background.draw()
-    // boundaries.forEach(boundary =>{
-    //     boundary.draw()
-    // })
-    testBoundary.draw()
+    boundaries.forEach(boundary =>{
+        boundary.draw()
+    })
+    
     player.draw()
 
-    if(rectangularCollision({rectangle1: player,rectangle2: testBoundary})){
-        console.log('colliding');
-    }
-
+    
+    let moving = true
     if(keys.w.pressed && lastKey === 'w') {
-       movables.forEach(movable=>{
-            movable.position.y += 3
-       })
+        for(let i =0; i < boundaries.length; i++){
+            const boundary = boundaries[i]
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...boundary,
+                    position:{
+                        x: boundary.position.x,
+                        y: boundary.position.y + 3
+                    }
+                }
+            })){
+                moving = false
+                break
+            }
+        }
+        if (moving){
+            movables.forEach(movable=>{
+                movable.position.y += 3
+            })
+        }
     }
     else if(keys.a.pressed && lastKey === 'a') {
-       movables.forEach(movable=>{
-            movable.position.x += 3
-       })
+        for(let i =0; i < boundaries.length; i++){
+            const boundary = boundaries[i]
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...boundary,
+                    position:{
+                        x: boundary.position.x + 2 ,
+                        y: boundary.position.y
+                    }
+                }
+            })){
+                moving = false
+                break
+            }
+        }
+        if (moving){
+            movables.forEach(movable=>{
+                movable.position.x += 3
+            })
+        }
     }
     else if(keys.s.pressed && lastKey === 's') {
-       movables.forEach(movable=>{
-            movable.position.y -= 3
-       })
+        for(let i =0; i < boundaries.length; i++){
+            const boundary = boundaries[i]
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...boundary,
+                    position:{
+                        x: boundary.position.x,
+                        y: boundary.position.y - 3
+                    }
+                }
+            })){
+                moving = false
+                break
+            }
+        }
+        if (moving){
+            movables.forEach(movable=>{
+                movable.position.y -= 3
+            })
+        }
     }
     else if(keys.d.pressed && lastKey === 'd') {
-       movables.forEach(movable=>{
-            movable.position.x -= 3
-       })
+        for(let i =0; i < boundaries.length; i++){
+            const boundary = boundaries[i]
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...boundary,
+                    position:{
+                        x: boundary.position.x - 2,
+                        y: boundary.position.y
+                    }
+                }
+            })){
+                moving = false
+                break
+            }
+        }
+        if (moving){
+            movables.forEach(movable=>{
+                movable.position.x -= 3
+            })
+        }
     }
 }
    
