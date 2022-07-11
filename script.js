@@ -54,6 +54,8 @@ image.src = './Image/Pellet Town.png'
 const playerImage = new Image()
 playerImage.src = './Image/playerDown.png'
 
+const foregroundImage = new Image()
+foregroundImage.src = './Image/Foreground.png'
 class Sprite{
     constructor({position,image,frames = {max : 1} }){
         this.position = position
@@ -80,6 +82,13 @@ class Sprite{
     }
 }
 
+const background = new Sprite({
+    position:{
+        x: offset.x,
+        y: offset.y
+    },
+    image
+})
 
 const player =  new Sprite({
     position:{
@@ -88,16 +97,18 @@ const player =  new Sprite({
     },
     image: playerImage,
     frames: {max: 4}
-
 })
 
-const background = new Sprite({
+const foreground =  new Sprite({
     position:{
         x: offset.x,
         y: offset.y
     },
-    image
+    image: foregroundImage
+
 })
+
+
 
 const keys = {
     w:{
@@ -114,7 +125,7 @@ const keys = {
     },
 }
 
-const movables = [background,...boundaries] //all movable objects
+const movables = [background,...boundaries,foreground] //all movable objects
 
 function rectangularCollision({rectangle1,rectangle2}){
     return(
@@ -133,7 +144,7 @@ function animate(){
     })
     
     player.draw()
-
+    foreground.draw()
     
     let moving = true
     if(keys.w.pressed && lastKey === 'w') {
