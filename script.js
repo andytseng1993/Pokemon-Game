@@ -4,38 +4,84 @@ const ctx = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
 
-
 /* collisions */
-const collisionsMap = []
-//weidth = 70 tiles, height = 40titles
-for(let i = 0; i <collisions.length ; i += 70){
-    collisionsMap.push(collisions.slice(i,i+70))
+function jsonData(data,arrayMap){
+    //weidth = 70 tiles, height = 40titles
+    for(let i = 0; i <data.length ; i += 70){
+        arrayMap.push(data.slice(i,i+70))
+    }
 }
-console.log(collisionsMap);
+const collisionsMap = []
+// for(let i = 0; i <collisions.length ; i += 70){
+//     collisionsMap.push(collisions.slice(i,i+70))
+// }
+jsonData(collisions,collisionsMap)
+
+/* Battle Zones */
+const lowBattleZonesMap = []
+jsonData(lowBattleZonesData,lowBattleZonesMap)
+
+const midBattleZonesMap = []
+jsonData(midBattleZonesData,midBattleZonesMap)
+
+const highBattleZonesMap = []
+jsonData(highBattleZonesData,highBattleZonesMap)
+
+const bossBattleZonesMap = []
+jsonData(bossBattleZonesData,bossBattleZonesMap)
 
 
 const offset={
     x: -1425,
     y: -520
 }
-
-const boundaries = []
-collisionsMap.forEach((row, i)=>{
-    row.forEach((tile, j) =>{
-        if(tile === 1025 ){
-            boundaries.push(
-                new Boundary ({
-                    position:{
-                        x: j*Boundary.width + offset.x,
-                        y: i*Boundary.height+ offset.y
-                    }
-                })
-            ) 
-        }
+function area(arrayMap,positionArray){
+    arrayMap.forEach((row, i)=>{
+        row.forEach((tile, j) =>{
+            if(tile === 1025 ){
+                positionArray.push(
+                    new Boundary ({
+                        position:{
+                            x: j*Boundary.width + offset.x,
+                            y: i*Boundary.height+ offset.y
+                        }
+                    })
+                ) 
+            }
+        })
     })
-})
+}
+/* Collision Area Array */
+const boundaries = []
+area(collisionsMap,boundaries)
+// collisionsMap.forEach((row, i)=>{
+//     row.forEach((tile, j) =>{
+//         if(tile === 1025 ){
+//             boundaries.push(
+//                 new Boundary ({
+//                     position:{
+//                         x: j*Boundary.width + offset.x,
+//                         y: i*Boundary.height+ offset.y
+//                     }
+//                 })
+//             ) 
+//         }
+//     })
+// })
 
-console.log(boundaries);
+/* Battle Zones Area Array */
+const lowBattleZones = []
+area(lowBattleZonesMap,lowBattleZones)
+
+const midBattleZones = []
+area(midBattleZonesMap,midBattleZones)
+
+const highBattleZones = []
+area(highBattleZonesMap,highBattleZones)
+
+const bossBattleZones = []
+area(bossBattleZonesMap,bossBattleZones)
+
 const image = new Image()
 image.src = './Image/Pellet Town.png'
 
@@ -77,7 +123,7 @@ const player =  new Sprite({
         right: playerRightImage
     }
 })
-console.log(player);
+
 const foreground =  new Sprite({
     position:{
         x: offset.x,
@@ -102,7 +148,7 @@ const keys = {
     },
 }
 
-const movables = [background,...boundaries,foreground] //all movable objects
+const movables = [background,...boundaries,foreground,...lowBattleZones,...midBattleZones,...highBattleZones,...bossBattleZones] //all movable objects
 
 function rectangularCollision({rectangle1,rectangle2}){
     return(
@@ -119,6 +165,18 @@ function animate(){
     boundaries.forEach(boundary =>{
         boundary.draw()
     })
+    lowBattleZones.forEach(battleZone =>{
+        battleZone.draw()
+    })
+    midBattleZones.forEach(battleZone =>{
+        battleZone.draw()
+    })
+    highBattleZones.forEach(battleZone =>{
+        battleZone.draw()
+    })
+    bossBattleZones.forEach(battleZone =>{
+        battleZone.draw()
+    })
     
     player.draw()
     foreground.draw()
@@ -126,6 +184,7 @@ function animate(){
          player.moving = false
     }
     let moving = true
+
     if(keys.w.pressed && lastKey === 'w') {
         player.image = player.sprites.up
         player.moving = true
@@ -224,6 +283,18 @@ function animate(){
             movables.forEach(movable=>{
                 movable.position.x -= 3
             })
+        }
+    }
+    if(keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed){
+        for(let i =0; i < lowBattleZones.length; i++){
+            const battleZone = lowBattleZones[i]
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: battleZone
+            })){
+                console.log('lowBattle');
+                break
+            }
         }
     }
 }
