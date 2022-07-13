@@ -273,8 +273,7 @@ function animate(){
                         x: boundary.position.x - 2,
                         y: boundary.position.y
                     }
-                }
-            })){
+                }})){
                 moving = false
                 break
             }
@@ -285,14 +284,22 @@ function animate(){
             })
         }
     }
+    /* detect in Battle Zones */
     if(keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed){
         for(let i =0; i < lowBattleZones.length; i++){
             const battleZone = lowBattleZones[i]
+            const overlappingArea = 
+                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
+                Math.max(battleZone.position.x, player.position.x)) * 
+                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
+                Math.max(battleZone.position.y, player.position.y))
             if(rectangularCollision({
                 rectangle1: player,
                 rectangle2: battleZone
-            })){
-                console.log('lowBattle');
+            })  && overlappingArea > (player.width*player.height)/2 
+                && Math.random() <0.03
+            ){
+                console.log('lowBattle',Math.random());
                 break
             }
         }
