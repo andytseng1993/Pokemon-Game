@@ -158,9 +158,13 @@ function rectangularCollision({rectangle1,rectangle2}){
         rectangle1.position.y + rectangle1.height/2<= rectangle2.position.y+rectangle2.height
     )
 }
+const battle = {
+    initiated : false
+}
+
 
 function animate(){
-    window.requestAnimationFrame(animate)
+    const animationId = window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary =>{
         boundary.draw()
@@ -180,10 +184,42 @@ function animate(){
     
     player.draw()
     foreground.draw()
+
     if(player.moving){
          player.moving = false
     }
     let moving = true
+
+    if(battle.initiated) return
+    /* detect in Battle Zones */
+    if(keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed){
+        for(let i =0; i < lowBattleZones.length; i++){
+            const battleZone = lowBattleZones[i]
+            const overlappingArea = 
+                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
+                Math.max(battleZone.position.x, player.position.x)) * 
+                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
+                Math.max(battleZone.position.y, player.position.y))
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: battleZone
+            })  && overlappingArea > (player.width*player.height)/2 
+                && Math.random() <0.02
+            ){
+                console.log('lowBattle');
+                /* cancel animation loop */
+                window.cancelAnimationFrame(animationId)
+                battle.initiated = true
+                let el = document.getElementById('battle')
+                el.classList.add('activation')
+                /* activate a new animation loop */
+                window.setTimeout(animationBattle,1800)
+                
+                break
+            }
+        }
+    }
+    
 
     if(keys.w.pressed && lastKey === 'w') {
         player.image = player.sprites.up
@@ -284,29 +320,11 @@ function animate(){
             })
         }
     }
-    /* detect in Battle Zones */
-    if(keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed){
-        for(let i =0; i < lowBattleZones.length; i++){
-            const battleZone = lowBattleZones[i]
-            const overlappingArea = 
-                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
-                Math.max(battleZone.position.x, player.position.x)) * 
-                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
-                Math.max(battleZone.position.y, player.position.y))
-            if(rectangularCollision({
-                rectangle1: player,
-                rectangle2: battleZone
-            })  && overlappingArea > (player.width*player.height)/2 
-                && Math.random() <0.03
-            ){
-                console.log('lowBattle',Math.random());
-                break
-            }
-        }
-    }
+    
 }
    
 animate()
+
 
 window.addEventListener('keydown',(e)=>{
     switch (e.key){

@@ -2,3 +2,37 @@ body{
     margin: 0;
     background-color: black;
 }
+.overLapping{
+    position: absolute;
+    display: inline-block;
+    background-color: black;
+    width: 1024px;
+    height: 576px;
+    opacity: 0;
+}
+.activation{
+    animation: active 2s both;
+}
+@keyframes active {
+    5% {
+        opacity: 1;
+    }
+    15% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    35%{
+        opacity: 0;
+    }
+    45%{
+        opacity: 1;
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
