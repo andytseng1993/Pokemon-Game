@@ -13,7 +13,7 @@ class Boundary{
 }
 
 class Sprite{
-    constructor({position,image,frames = {max : 1}, sprites}){
+    constructor({position,image,frames = {max : 1, hold: 10 }, sprites, animation = false, scale = 1}){
         this.position = position
         this.image = image
         this.frames = {...frames, val: 0 ,elapes: 0}
@@ -21,8 +21,9 @@ class Sprite{
             this.width = this.image.width/this.frames.max
             this.height = this.image.height
         }
-        this.moving = false
+        this.animation = animation
         this.sprites = sprites
+        this.scale = scale
     }
     draw(){
         ctx.drawImage(
@@ -33,14 +34,14 @@ class Sprite{
             this.image.height,// crop height
             this.position.x, //x
             this.position.y, //y
-            this.image.width/this.frames.max, // actually width, scale rate
-            this.image.height,// actually height,scale rate
+            this.image.width/this.frames.max*this.scale, // actually width, scale rate
+            this.image.height*this.scale,// actually height,scale rate
         )
-        if(!this.moving) {
+        if(!this.animation) {
             this.frames.val=0
             return
         }
         if(this.frames.max>1) this.frames.elapes++
-        if(this.frames.elapes %10 === 0) this.frames.val= (++this.frames.val)% this.frames.max
+        if(this.frames.elapes % this.frames.hold === 0) this.frames.val= (++this.frames.val)% this.frames.max
     }
 }

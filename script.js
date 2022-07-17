@@ -115,7 +115,7 @@ const player =  new Sprite({
         y : canvas.height/2 - 68/2
     },
     image: playerDownImage,
-    frames: {max: 4},
+    frames: {max: 4, hold: 10},
     sprites: {
         up: playerUpImage,
         left: playerLeftImage,
@@ -185,8 +185,8 @@ function animate(){
     player.draw()
     foreground.draw()
 
-    if(player.moving){
-         player.moving = false
+    if(player.animation){
+         player.animation = false
     }
     let moving = true
 
@@ -223,7 +223,7 @@ function animate(){
 
     if(keys.w.pressed && lastKey === 'w') {
         player.image = player.sprites.up
-        player.moving = true
+        player.animation = true
         for(let i =0; i < boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectangularCollision({
@@ -248,7 +248,7 @@ function animate(){
     }
     else if(keys.a.pressed && lastKey === 'a') {
         player.image = player.sprites.left
-        player.moving = true
+        player.animation = true
         for(let i =0; i < boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectangularCollision({
@@ -273,7 +273,7 @@ function animate(){
     }
     else if(keys.s.pressed && lastKey === 's') {
         player.image = player.sprites.down
-        player.moving = true
+        player.animation = true
         for(let i =0; i < boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectangularCollision({
@@ -298,7 +298,7 @@ function animate(){
     }
     else if(keys.d.pressed && lastKey === 'd') {
         player.image = player.sprites.right
-        player.moving = true
+        player.animation = true
         for(let i =0; i < boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectangularCollision({
@@ -323,8 +323,8 @@ function animate(){
     
 }
    
-animate()
-
+// animate()
+animationBattle()
 
 window.addEventListener('keydown',(e)=>{
     switch (e.key){
