@@ -110,3 +110,88 @@ body{
     flex-grow: 1;
 }
 
+.pokemonName{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    background-color: white;
+    padding: 8px 15px 5px;
+    width: 280px;
+    border : 8px ridge rgb(5, 125, 79);
+    border-radius: 20px 5px 20px 5px;
+    font-family: 'Press Start 2P', cursive;
+    z-index: 5;
+}
+.nameBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.pokemonName .name{
+    font-size: 20px;
+    text-shadow: 3px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.Lv{
+    text-shadow: 3px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.hpContent{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.hpName{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 30px;
+    padding: 3px 10px 3px 10px;
+    color: rgb(255, 242, 0);
+    background: linear-gradient(0deg, rgba(7,71,25,1) 0%, rgba(12,141,48,1) 100%);
+}
+.hpBar{
+    width: 180px;
+    height: 9px;
+    border-radius: 7px;
+    margin-left: 5px;
+    border: 3px rgb(245, 245, 245) solid;
+    box-shadow: inset 0px 3px 1px rgba(0, 0, 0, 0.4);
+}
+.hp{
+    width: 50%;
+    height: 9px;
+    background-color: rgb(84, 255, 150);
+    border-radius: 7px 0px 0px 7px;
+    box-shadow: inset 0px 3px 1px rgba(0, 0, 0, 0.4);
+}
+.pokemonName.self{
+    top: 320px;
+    left: inherit;
+    right: 150px;
+    border-radius: 20px;
+    padding: 15px 20px;
+    border : 8px solid rgb(0, 124, 56);
+    border-radius: 25px 5px 25px 10px;
+}
+.symbol{
+    position: absolute;
+    left: 375px;
+    top: 55px;
+    font-size: 120px;
+    color: rgb(0, 32, 20);
+    font-family: 'Press Start 2P', cursive;
+    z-index: 1;
+}
+.symbolself{
+    position: absolute;
+    right: 435px;
+    top: 342px;
+    font-size: 120px;
+    color: rgb(0, 124, 56);
+    font-family: 'Press Start 2P', cursive;
+}
