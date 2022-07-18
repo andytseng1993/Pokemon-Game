@@ -36,3 +36,77 @@ body{
         opacity: 0;
     }
 }
+.content{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1024px;
+    height: 150px;
+    background-color: rgb(57, 49, 49);
+    bottom: 0;
+}
+#battlebar{
+    display: flex;
+    padding: 5px;
+    width: 980px;
+    height: 115px;
+    background-color: rgb(32, 49, 119);
+    border: 10px solid rgb(239, 160, 81);
+    bottom: 0;
+    border-radius: 15px;
+    font-family: 'Press Start 2P', cursive;
+
+}
+#action{
+    margin: -1px;
+    padding: 10px;
+    flex-grow: 2;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(69, 151, 151);
+    border: 5px solid rgb(221, 239, 255);
+    border-radius: 5px;
+}
+#action button{
+    font-family: 'Press Start 2P', cursive;
+    position: relative;
+    padding: 3px 20px 3px 40px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: white;
+    border: none;
+    background-color: transparent;
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.6);
+}
+#action button::before{
+    content: '\27A4';
+    position: absolute;
+    top: -4px;
+    left: 5px;
+    font-size: 24px;
+    font-family: 'Press Start 2P', cursive;
+    opacity: 0;
+    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.6));
+}
+#action button:active{
+    transform: translate(0px,2px);
+}
+#action button:hover::before{
+    opacity: 1;
+}
+
+#attackType{
+    box-sizing:border-box;
+    margin-top: -1px;
+    margin-left: 15px;
+    padding-left: 20px;
+    background-color: rgb(69, 151, 151);
+    border: 7px solid rgb(221, 239, 255);
+    border-radius: 5px;
+    flex-grow: 1;
+}
+

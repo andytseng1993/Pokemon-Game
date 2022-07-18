@@ -5,13 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div style="position: relative;">
         <div id="battle" class="overLapping"></div>
+        <div class="pokemonName">
+            <h1>Draggle</h1>
+        </div>
+        <canvas></canvas>
+        <div class="content">
+            <div id="battlebar">
+                <div id="action">
+                    <button>Fight</button>
+                    <button>Run</button>
+                    
+                </div>
+                <div id="attackType">
+                    <h3>Attack Type</h3>
+                </div>
+            </div>
+        </div>
+        
     </div>
-    <canvas></canvas>
+    
     <script src="./data/collisions.js"></script>
     <script src="./data/lowBattleZones.js"></script>
     <script src="./data/midBattleZones.js"></script>
