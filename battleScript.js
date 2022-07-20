@@ -19,23 +19,37 @@ const draggle = new Sprite({position:{
     image: draggleImage,
     frames:{ max: 4, hold: 30},
     animation: true,
-    scale: 1.1
+    scale: 1,
+    isEnemy: true
 })
 
 const emby = new Sprite({position:{
         x: 265,
-        y: 305
+        y: 300
     },
     image: embyImage,
     frames:{ max: 4, hold: 15},
     animation: true,
-    scale: 1.3
+    scale: 1
 })
 
-
+const renderedSprites = [draggle,emby]
 function animationBattle(){
     window.requestAnimationFrame(animationBattle)
     battleBackground.draw()
-    draggle.draw()
-    emby.draw()
+    renderedSprites.forEach(sprite =>{
+        sprite.draw()
+    })
 }
+
+document.querySelectorAll('button').forEach(button=>{
+    button.addEventListener('click',(e)=>{
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
+        console.log(attacks);
+        draggle.attack({
+            attack: selectedAttack,
+            enemy: emby,
+            renderedSprites
+        })
+    })
+})

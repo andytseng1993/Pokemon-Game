@@ -42,7 +42,7 @@ body{
     justify-content: center;
     align-items: center;
     width: 1024px;
-    height: 150px;
+    height: 160px;
     background-color: rgb(57, 49, 49);
     bottom: 0;
 }
@@ -146,7 +146,7 @@ body{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 200px;
+    width: 210px;
     font-size: 14px;
     font-weight: 700;
     border-radius: 30px;
@@ -155,22 +155,35 @@ body{
     background: linear-gradient(0deg, rgba(7,71,25,1) 0%, rgba(12,141,48,1) 100%);
 }
 .hpBar{
+    position: relative;
     width: 180px;
     height: 9px;
     border-radius: 7px;
-    margin-left: 5px;
-    border: 3px rgb(245, 245, 245) solid;
+    margin-left: 10px;
+    
     box-shadow: inset 0px 3px 1px rgba(0, 0, 0, 0.4);
 }
 .hp{
-    width: 50%;
     height: 9px;
+    /* 100% :rgb(84, 255, 150) 50%~20% :rgb(255, 239, 18) 20%:rgb(253, 68, 12)*/
     background-color: rgb(84, 255, 150);
     border-radius: 7px 0px 0px 7px;
     box-shadow: inset 0px 3px 1px rgba(0, 0, 0, 0.4);
 }
+.hpBar::after{
+    content: '';
+    position: absolute;
+    top: -2.5px;
+    left: -3.5px;
+    width: 169px;
+    height: 9px;
+    border: 3px rgb(245, 245, 245) solid;
+    border-radius: 7px;
+    
+
+}
 .pokemonName.self{
-    top: 320px;
+    top: 314px;
     left: inherit;
     right: 150px;
     border-radius: 20px;
@@ -181,7 +194,7 @@ body{
 .symbol{
     position: absolute;
     left: 375px;
-    top: 55px;
+    top: 54px;
     font-size: 120px;
     color: rgb(0, 32, 20);
     font-family: 'Press Start 2P', cursive;
@@ -190,7 +203,7 @@ body{
 .symbolself{
     position: absolute;
     right: 435px;
-    top: 342px;
+    top: 335px;
     font-size: 120px;
     color: rgb(0, 124, 56);
     font-family: 'Press Start 2P', cursive;
