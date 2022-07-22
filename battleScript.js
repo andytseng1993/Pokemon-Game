@@ -20,7 +20,8 @@ const draggle = new Sprite({position:{
     frames:{ max: 4, hold: 30},
     animation: true,
     scale: 1,
-    isEnemy: true
+    isEnemy: true,
+    name: 'Draggle'
 })
 
 const emby = new Sprite({position:{
@@ -30,9 +31,10 @@ const emby = new Sprite({position:{
     image: embyImage,
     frames:{ max: 4, hold: 15},
     animation: true,
-    scale: 1
+    scale: 1,
+    name: 'Emby'
 })
-
+const queue = []
 const renderedSprites = [draggle,emby]
 function animationBattle(){
     window.requestAnimationFrame(animationBattle)
@@ -46,10 +48,21 @@ document.querySelectorAll('button').forEach(button=>{
     button.addEventListener('click',(e)=>{
         const selectedAttack = attacks[e.currentTarget.innerHTML]
         console.log(attacks);
-        draggle.attack({
+        emby.attack({
             attack: selectedAttack,
-            enemy: emby,
+            enemy: draggle,
             renderedSprites
         })
+        queue.push(()=>{
+            draggle.attack({
+                attack: attacks.Tackle,
+                enemy: emby,
+                renderedSprites
+            })
+        })
     })
+})
+document.querySelector('#dialogueBox').addEventListener('click',(e)=>{
+    if(queue.length>0) return (queue.shift())()
+    e.currentTarget.style.display = 'none'
 })

@@ -13,7 +13,7 @@ class Boundary{
 }
 
 class Sprite{
-    constructor({position,image,frames = {max : 1, hold: 10 }, sprites, animation = false, scale = 1,isEnemy = false,rotation = 0}){
+    constructor({position,image,frames = {max : 1, hold: 10 }, sprites, animation = false, scale = 1,isEnemy = false,rotation = 0,name}){
         this.position = position
         this.image = image
         this.frames = {...frames, val: 0 ,elapes: 0, frame:0}
@@ -29,6 +29,7 @@ class Sprite{
         this.health = 100
         this.isEnemy = isEnemy
         this.rotation = rotation
+        this.name = name
     }
     draw(){
         ctx.save()
@@ -59,6 +60,10 @@ class Sprite{
         if(this.frames.elapes % this.frames.hold === 0) this.frames.val= (++this.frames.val)% this.frames.max
     }
     attack({attack,enemy, renderedSprites}){
+        // dialogueBox
+        document.querySelector('#dialogueBox').style.display = 'block'
+        document.querySelector('#dialogueBox').textContent = this.name + ' used '+ attack.name + '!'
+
         let rotation = 1
         let healthBar ='#enemyHealthBar'
         
