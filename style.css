@@ -66,16 +66,17 @@ body{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     background-color: rgb(69, 151, 151);
     border: 5px solid rgb(221, 239, 255);
     border-radius: 5px;
 }
-#action button{
+#action button,
+#attackType button{
     font-family: 'Press Start 2P', cursive;
     position: relative;
-    padding: 3px 20px 3px 50px;
+    padding: 6px 20px 5px 50px;
     margin-bottom: 10px;
     font-size: 20px;
     color: white;
@@ -84,7 +85,8 @@ body{
     text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.6);
     cursor: pointer;
 }
-#action button::before{
+#action button::before,
+#attackType button::before{
     content: '\27A4';
     position: absolute;
     top: -4px;
@@ -95,10 +97,12 @@ body{
     filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.6));
     animation: actionSelect 1s infinite ease-in alternate;
 }
-#action button:active{
+#action button:active,
+#attackType button:active{
     transform: translate(0px,2px);
 }
-#action button:hover::before{
+#action button:hover::before,
+#attackType button:hover::before{
     opacity: 1;
 }
 @keyframes actionSelect{
@@ -107,6 +111,12 @@ body{
     }
     
 }
+#action p{
+    display: flex;
+    align-self: flex-start;
+    color: white;
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.6);
+}
 
 
 #attackType{
@@ -114,10 +124,14 @@ body{
     margin-top: -1px;
     margin-left: 15px;
     padding-left: 20px;
+    padding: 15px 10px;
     background-color: rgb(69, 151, 151);
     border: 7px solid rgb(221, 239, 255);
     border-radius: 5px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .pokemonName{

@@ -1,39 +1,15 @@
 const battleImage = new Image()
 battleImage.src = './Image/battleBackground.png'
 
-const draggleImage = new Image()
-draggleImage.src = './Image/draggleSprite.png'
-const embyImage = new Image()
-embyImage.src = './Image/embySprite.png'
-
 const battleBackground = new Sprite({position:{
         x: 0,
         y: 0
     },
     image: battleImage
 })
-const draggle = new Sprite({position:{
-        x: 790,
-        y: 95
-    },
-    image: draggleImage,
-    frames:{ max: 4, hold: 30},
-    animation: true,
-    scale: 1,
-    isEnemy: true,
-    name: 'Draggle'
-})
+const draggle = new Monster(monsters.Draggle)
+const emby = new Monster(monsters.Emby)
 
-const emby = new Sprite({position:{
-        x: 265,
-        y: 300
-    },
-    image: embyImage,
-    frames:{ max: 4, hold: 15},
-    animation: true,
-    scale: 1,
-    name: 'Emby'
-})
 const queue = []
 const renderedSprites = [draggle,emby]
 function animationBattle(){
@@ -43,26 +19,85 @@ function animationBattle(){
         sprite.draw()
     })
 }
+// Fight& Run button
+const actions = ['Fight','Run']
+actions.forEach( action=>{
+    const button = document.createElement('button')
+    button.textContent = action
+    document.querySelector('#attackType').append(button)
+})
+const par = document.createElement('p')
+par.textContent = 'What will Emby do ?'
+document.getElementById('action').append(par)
 
-document.querySelectorAll('button').forEach(button=>{
+document.querySelectorAll('#attackType button').forEach(button=>{
     button.addEventListener('click',(e)=>{
-        const selectedAttack = attacks[e.currentTarget.innerHTML]
-        console.log(attacks);
-        emby.attack({
-            attack: selectedAttack,
-            enemy: draggle,
-            renderedSprites
-        })
-        queue.push(()=>{
-            draggle.attack({
-                attack: attacks.Tackle,
-                enemy: emby,
-                renderedSprites
+        // Fight Action
+        if(e.currentTarget.innerHTML==='Fight'){
+            document.getElementById('action').innerHTML = ''
+            emby.attacks.forEach(attack =>{
+                const button = document.createElement('button')
+                button.textContent = attack.name
+                document.getElementById('action').append(button)
             })
-        })
+            document.getElementById('attackType').innerHTML = ''
+            document.querySelectorAll('#action button').forEach(button=>{
+                button.addEventListener('click',(e)=>{
+                    const selectedAttack = attacks.Emby[e.currentTarget.innerHTML]
+                    console.log(attacks);
+                    emby.attack({
+                        attack: selectedAttack,
+                        enemy: draggle,
+                        renderedSprites
+                    })
+                    const randomAttack = draggle.attacks[Math.floor(Math.random()* draggle.attacks.length)]
+                    queue.push(()=>{
+                        draggle.attack({
+                            attack: randomAttack,
+                            enemy: emby,
+                            renderedSprites
+                        })
+                    })
+                })
+            })
+            document.querySelector('#dialogueBox').addEventListener('click',(e)=>{
+                if(queue.length>0) return (queue.shift())()
+                e.currentTarget.style.display = 'none'
+            })
+        }
+        // Run Action
+        if(e.currentTarget.innerHTML==='Run'){
+            console.log('Run');
+        }
     })
 })
-document.querySelector('#dialogueBox').addEventListener('click',(e)=>{
-    if(queue.length>0) return (queue.shift())()
-    e.currentTarget.style.display = 'none'
-})
+
+
+// emby.attacks.forEach(attack =>{
+//     const button = document.createElement('button')
+//     button.textContent = attack.name
+//     document.getElementById('action').append(button)
+// })
+
+// document.querySelectorAll('#action button').forEach(button=>{
+//     button.addEventListener('click',(e)=>{
+//         const selectedAttack = attacks[e.currentTarget.innerHTML]
+//         console.log(attacks);
+//         emby.attack({
+//             attack: selectedAttack,
+//             enemy: draggle,
+//             renderedSprites
+//         })
+//         queue.push(()=>{
+//             draggle.attack({
+//                 attack: attacks.Tackle,
+//                 enemy: emby,
+//                 renderedSprites
+//             })
+//         })
+//     })
+// })
+// document.querySelector('#dialogueBox').addEventListener('click',(e)=>{
+//     if(queue.length>0) return (queue.shift())()
+//     e.currentTarget.style.display = 'none'
+// })

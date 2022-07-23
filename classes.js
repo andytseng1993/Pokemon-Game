@@ -13,7 +13,17 @@ class Boundary{
 }
 
 class Sprite{
-    constructor({position,image,frames = {max : 1, hold: 10 }, sprites, animation = false, scale = 1,isEnemy = false,rotation = 0,name}){
+    constructor({
+        position,
+        image,
+        frames = {max : 1, hold: 10 },
+        sprites, 
+        animation = false,
+        scale = 1,
+        isEnemy = false,
+        rotation = 0,
+        name
+    }){
         this.position = position
         this.image = image
         this.frames = {...frames, val: 0 ,elapes: 0, frame:0}
@@ -25,11 +35,8 @@ class Sprite{
         this.sprites = sprites
         this.scale = scale
         this.opacity = 1
-        this.fullHealth = 100
-        this.health = 100
-        this.isEnemy = isEnemy
         this.rotation = rotation
-        this.name = name
+        
     }
     draw(){
         ctx.save()
@@ -59,6 +66,36 @@ class Sprite{
         if(this.frames.max>1) this.frames.elapes++
         if(this.frames.elapes % this.frames.hold === 0) this.frames.val= (++this.frames.val)% this.frames.max
     }
+}
+
+class Monster extends Sprite{
+    constructor({
+        position,
+        image,
+        frames = {max : 1, hold: 10 },
+        sprites, 
+        animation = false,
+        scale = 1,
+        rotation = 0,
+        isEnemy = false,
+        name,
+        attacks
+    }){
+        super({
+            position,
+            image,
+            frames,
+            sprites, 
+            animation,
+            scale,
+            rotation,
+        })
+        this.isEnemy = isEnemy
+        this.health = 100
+        this.fullHealth = 100
+        this.name = name
+        this.attacks = attacks
+    }
     attack({attack,enemy, renderedSprites}){
         // dialogueBox
         document.querySelector('#dialogueBox').style.display = 'block'
@@ -67,12 +104,12 @@ class Sprite{
         let rotation = 1
         let healthBar ='#enemyHealthBar'
         
-            if(this.isEnemy) {
-                healthBar = '#playerHealthBar'
-                rotation = -2.5
-            }
-        this.health -= attack.damage
-        let healthPercent = this.health*100/this.fullHealth
+        if(this.isEnemy) {
+            healthBar = '#playerHealthBar'
+            rotation = -2.5
+        }
+        enemy.health -= attack.damage
+        let healthPercent = enemy.health*100/enemy.fullHealth
 
         let healthColor = 'rgb(84, 255, 150)'
         if(healthPercent<= 20) healthColor = 'rgb(253, 68, 12)'
