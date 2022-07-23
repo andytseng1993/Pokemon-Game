@@ -34,22 +34,23 @@ document.querySelectorAll('#attackType button').forEach(button=>{
     button.addEventListener('click',(e)=>{
         // Fight Action
         if(e.currentTarget.innerHTML==='Fight'){
-            document.getElementById('action').innerHTML = ''
+            document.getElementById('action').textContent = ''
             emby.attacks.forEach(attack =>{
                 const button = document.createElement('button')
                 button.textContent = attack.name
                 document.getElementById('action').append(button)
             })
-            document.getElementById('attackType').innerHTML = ''
+            document.getElementById('attackType').textContent = 'Attack Type'
             document.querySelectorAll('#action button').forEach(button=>{
                 button.addEventListener('click',(e)=>{
-                    const selectedAttack = attacks.Emby[e.currentTarget.innerHTML]
+                    const selectedAttack = attacks.Emby[e.currentTarget.textContent]
                     console.log(attacks);
                     emby.attack({
                         attack: selectedAttack,
                         enemy: draggle,
                         renderedSprites
                     })
+                    // enemy attacks
                     const randomAttack = draggle.attacks[Math.floor(Math.random()* draggle.attacks.length)]
                     queue.push(()=>{
                         draggle.attack({
@@ -59,13 +60,22 @@ document.querySelectorAll('#attackType button').forEach(button=>{
                         })
                     })
                 })
+                //Attack Type
+                button.addEventListener('mouseenter',(e)=>{
+                    const type = attacks.Emby[e.currentTarget.textContent]
+                    if(type.type === 'Fire') document.getElementById('attackType').style.color = 'rgb(255, 130, 101)'
+                    else document.getElementById('attackType').style.color = 'white'
+                    document.getElementById('attackType').textContent = type.type
+                })
             })
             document.querySelector('#dialogueBox').addEventListener('click',(e)=>{
                 if(queue.length>0) return (queue.shift())()
                 e.currentTarget.style.display = 'none'
+                document.getElementById('attackType').textContent = 'Attack Type'
+                document.getElementById('attackType').style.color = 'white'
             })
         }
-        // Run Action
+        // choose to Run Action
         if(e.currentTarget.innerHTML==='Run'){
             console.log('Run');
         }

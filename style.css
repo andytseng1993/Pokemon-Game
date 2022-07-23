@@ -74,9 +74,10 @@ body{
 }
 #action button,
 #attackType button{
+    align-self: flex-start;
     font-family: 'Press Start 2P', cursive;
     position: relative;
-    padding: 6px 20px 5px 50px;
+    padding: 5px 20px 4px 50px;
     margin-bottom: 10px;
     font-size: 20px;
     color: white;
@@ -121,6 +122,7 @@ body{
 
 #attackType{
     box-sizing:border-box;
+    width: 300px;
     margin-top: -1px;
     margin-left: 15px;
     padding-left: 20px;
@@ -128,10 +130,13 @@ body{
     background-color: rgb(69, 151, 151);
     border: 7px solid rgb(221, 239, 255);
     border-radius: 5px;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    text-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
 }
 
 .pokemonName{
@@ -190,7 +195,7 @@ body{
 .hp{
     height: 9px;
     /* 100% :rgb(84, 255, 150) 50%~20% :rgb(255, 239, 18) 20%:rgb(253, 68, 12)*/
-    background-color: rgb(84, 255, 150);
+    background-color: rgb(84, 255, 150); 
     border-radius: 7px 0px 0px 7px;
     box-shadow: inset 0px 3px 1px rgba(0, 0, 0, 0.4);
 }
