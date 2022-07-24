@@ -164,6 +164,7 @@ const battle = {
 
 
 function animate(){
+    
     const animationId = window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary =>{
@@ -342,9 +343,9 @@ function animate(){
     
 }
    
-// animate()
-initBattle()
-animationBattle()
+animate()
+// initBattle()
+// animationBattle()
 
 window.addEventListener('keydown',(e)=>{
     switch (e.key){

@@ -1,5 +1,5 @@
 const attacks = {
-    Emby:{
+    emby:{
         Tackle:{
             name: 'Tackle',
             damage: 15,
@@ -11,7 +11,7 @@ const attacks = {
             type: 'Fire'
         },
     },
-    Draggle:{
+    draggle:{
         Tackle:{
             name: 'Tackle',
             damage: 50,

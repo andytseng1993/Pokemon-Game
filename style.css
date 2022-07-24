@@ -242,3 +242,6 @@ body{
         top: 2px;
     }
 }
+#userInterface{
+    display: none;
+}
