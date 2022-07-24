@@ -10,7 +10,7 @@ const monsters = {
         },
         frames:{ max: 4, hold: 15},
         animation: true,
-        scale: 1.3,
+        scale: 1.2,
         name: 'Emby',
         attacks:[attacks.emby.Tackle, attacks.emby.Fireball]
     },

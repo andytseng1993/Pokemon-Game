@@ -343,9 +343,9 @@ function animate(){
     
 }
    
-animate()
-// initBattle()
-// animationBattle()
+// animate()
+initBattle()
+animationBattle()
 
 window.addEventListener('keydown',(e)=>{
     switch (e.key){

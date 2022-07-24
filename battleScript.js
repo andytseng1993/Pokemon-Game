@@ -72,10 +72,31 @@ function initBattle(){
             // choose to Run Action
             if(e.currentTarget.innerHTML==='Run'){
                 let run = Math.random()
-                if(run<0.3) {
-
+                if(run<0.4) {
+                    document.querySelector('#dialogueBox').style.display = 'block'
+                    document.querySelector('#dialogueBox').textContent =   ' You got away safely !'
+                    queue.push(()=>{
+                        gsap.to('#battle',{
+                            opacity: 1,
+                            zIndex: 15,
+                            onComplete:()=>{
+                                cancelAnimationFrame(battleAnimationId)
+                                document.querySelector('#userInterface').style.display = 'none'
+                                document.querySelector('#dialogueBox').style.display = 'none'
+                                animate()
+                                gsap.to('#battle',{
+                                    opacity: 0
+                                })
+                                battle.initiated = false
+                            }
+                        })
+                    })
                 }
-                else console.log('0.7');
+                else{
+                    document.querySelector('#dialogueBox').style.display = 'block'
+                    document.querySelector('#dialogueBox').textContent =   ' You failed to get away !'
+                    enemyAttack(emby,draggle)
+                }
             }
         })
     })
@@ -120,7 +141,7 @@ function enemyAttack(player,enemyMonster){
         checkHealth(player)
     })
 }
-
+// Check target health
 function checkHealth(target){
     if(target.health <= 0){
         queue.push(()=>{
