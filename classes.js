@@ -20,13 +20,12 @@ class Sprite{
         sprites, 
         animation = false,
         scale = 1,
-        isEnemy = false,
         rotation = 0,
-        name
     }){
         this.position = position
-        this.image = image
+        this.image = new Image()
         this.frames = {...frames, val: 0 ,elapes: 0, frame:0}
+        this.image.src = image.src
         this.image.onload = ()=>{
             this.width = this.image.width/this.frames.max
             this.height = this.image.height
@@ -109,6 +108,7 @@ class Monster extends Sprite{
             rotation = -2.5
         }
         enemy.health -= attack.damage
+        console.log(enemy.name,enemy.health);
         let healthPercent = enemy.health*100/enemy.fullHealth
 
         let healthColor = 'rgb(84, 255, 150)'
@@ -190,7 +190,58 @@ class Monster extends Sprite{
                     }
                 })
                 break
+                case 'RazorLeaf':
+                    const razorLeafImage = new Image()
+                    razorLeafImage.src = './image/razorleaf.png'
+                    const razorLeaf = new Sprite({
+                        position:{
+                            x: enemy.position.x,
+                            y: enemy.position.y
+                        },
+                        image: razorLeafImage,
+                        frames: {
+                            max:8,
+                            hold: 5
+                        },
+                        animation: true,
+                        scale: 3.5
+                    })
+                    renderedSprites.splice(2,0,razorLeaf) 
+                    gsap.from(razorLeaf.position,{
+                        x: enemy.position.x,
+                        y: enemy.position.y,
+                        onComplete:()=>{
+                            //enemy gets hit
+                            gsap.to(healthBar,{
+                                width: healthPercent +'%',
+                                backgroundColor: healthColor
+                            })
+                            gsap.to(enemy.position,{x:enemy.position.x+10,
+                                duration:0.05,
+                                yoyo:true,
+                                repeat:3,
+                            })
+                            gsap.to(enemy,{
+                                opacity:0,
+                                repeat:5,
+                                yoyo: true,
+                                duration: 0.08
+                            })
+                            renderedSprites.splice(2,1)
+    
+                        }
+                    })
+                    break
         }
-        
+    }
+    faint(){
+        document.querySelector('#dialogueBox').style.display = 'block'
+        document.querySelector('#dialogueBox').textContent = this.name + ' faint !'
+        gsap.to(this.position,{
+            y:this.position.y+20
+        })
+        gsap.to(this,{
+            opacity:0
+        })
     }
 }

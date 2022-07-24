@@ -210,10 +210,29 @@ function animate(){
                 /* cancel animation loop */
                 window.cancelAnimationFrame(animationId)
                 battle.initiated = true
-                let el = document.getElementById('battle')
-                el.classList.add('activation')
-                /* activate a new animation loop */
-                window.setTimeout(animationBattle,1800)
+                document.getElementById('battle').style.display = 'block'
+                gsap.to('#battle',{
+                    opacity:1,
+                    repeat:3,
+                    yoyo:true,
+                    duration: 0.3,
+                    onComplete(){
+                        gsap.to('#battle',{
+                            opacity:1,
+                            duration: 0.4,
+                            onComplete(){
+                                /* activate a new animation loop */
+                                initBattle()
+                                animationBattle()
+                                gsap.to('#battle',{
+                                    opacity:0,
+                                    duration: 0.4,
+                                })
+                            }
+                        })
+                    }
+                })
+                
                 
                 break
             }
@@ -324,6 +343,7 @@ function animate(){
 }
    
 // animate()
+initBattle()
 animationBattle()
 
 window.addEventListener('keydown',(e)=>{

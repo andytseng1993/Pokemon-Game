@@ -7,26 +7,21 @@ const attacks = {
         },
         Fireball:{
             name: 'Fireball',
-            damage: 25,
+            damage: 100,
             type: 'Fire'
-        },
-        Kick:{
-            name: 'Kick',
-            damage: 25,
-            type: 'Normal'
         },
     },
     Draggle:{
         Tackle:{
             name: 'Tackle',
-            damage: 5,
+            damage: 50,
             type: 'Normal'
         },
-        Fireball:{
-            name: 'Fireball',
-            damage: 15,
-            type: 'Fire'
-        },
+        RazorLeaf:{
+            name: 'RazorLeaf',
+            damage: 50,
+            type: 'Grass'
+        }
     }
     
     

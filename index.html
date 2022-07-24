@@ -13,43 +13,44 @@
 <body>
     <div style="position: relative; user-select: none;-webkit-user-select: none;">
         <div id="battle" class="overLapping"></div>
-        <div class="pokemonName">
-            <div class="nameBar">
-                <div class="name">Draggle</div>
-                <div class="Lv">Lv9</div>
-            </div>
-            <div class="hpContent"> 
-                <div class="hpName">HP
-                    <div class="hpBar">
-                        <div id="enemyHealthBar" class="hp"></div>
+        <div id="userInterface">
+            <div class="pokemonName">
+                <div class="nameBar">
+                    <div class="name">Draggle</div>
+                    <div class="Lv">Lv9</div>
+                </div>
+                <div class="hpContent"> 
+                    <div class="hpName">HP
+                        <div class="hpBar">
+                            <div id="enemyHealthBar" class="hp"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="symbol">&#8640;</div>
-        <div class="pokemonName self">
-            <div class="nameBar">
-                <div class="name">Draggle</div>
-                <div class="Lv">Lv9</div>
-            </div>
-            <div class="hpContent"> 
-                <div class="hpName">HP
-                    <div class="hpBar">
-                        <div id="playerHealthBar" class="hp"></div>
+            <div class="symbol">&#8640;</div>
+            <div class="pokemonName self">
+                <div class="nameBar">
+                    <div class="name">Emby</div>
+                    <div class="Lv">Lv9</div>
+                </div>
+                <div class="hpContent"> 
+                    <div class="hpName">HP
+                        <div class="hpBar">
+                            <div id="playerHealthBar" class="hp"></div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="symbolself">&#8636;</div>
+            <div class="content">
+                <div id="battlebar">
+                    <div id="action"></div>
+                    <div id="attackType"></div>
+                    <div id="dialogueBox"></div>
+                </div>
+            </div>
         </div>
-        <div class="symbolself">&#8636;</div>
         <canvas></canvas>
-        <div class="content">
-            <div id="battlebar">
-                <div id="action"></div>
-                <div id="attackType"></div>
-                <div id="dialogueBox"></div>
-            </div>
-        </div>
-        
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./data/collisions.js"></script>
