@@ -78,7 +78,10 @@ class Monster extends Sprite{
         rotation = 0,
         isEnemy = false,
         name,
-        attacks
+        attacks,
+        level,
+        healthBasic,
+        healthPerLv
     }){
         super({
             position,
@@ -90,16 +93,28 @@ class Monster extends Sprite{
             rotation,
         })
         this.isEnemy = isEnemy
-        this.health = 100
-        this.fullHealth = 100
+        this.healthBasic = healthBasic
+        this.healthPerLv = healthPerLv
         this.name = name
         this.attacks = attacks
+        this.level = level
+        this.health
+        this.setHealth()
+        this.fullHealth
     }
+    get fullHealth(){
+        this.health = this.healthBasic+ this.healthPerLv * this.level
+        return this.health
+    }
+    setHealth(health,damage){  
+        this.health =health - damage
+    }
+    
     attack({attack,enemy, renderedSprites}){
         // dialogueBox
         document.querySelector('#dialogueBox').style.display = 'block'
         document.querySelector('#dialogueBox').textContent = this.name + ' used '+ attack.name + '!'
-
+        
         let rotation = 1
         let healthBar ='#enemyHealthBar'
         
@@ -107,9 +122,10 @@ class Monster extends Sprite{
             healthBar = '#playerHealthBar'
             rotation = -2.5
         }
-        enemy.health -= attack.damage
+        enemy.setHealth(enemy.health,attack.damage)
+        // enemy.health -= attack.damage
         console.log(enemy.name,enemy.health);
-        let healthPercent = enemy.health*100/enemy.fullHealth
+        let healthPercent = enemy.health*100/(enemy.healthBasic+ enemy.healthPerLv * enemy.level)
 
         let healthColor = 'rgb(84, 255, 150)'
         if(healthPercent<= 20) healthColor = 'rgb(253, 68, 12)'

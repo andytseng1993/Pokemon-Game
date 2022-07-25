@@ -12,7 +12,9 @@ const monsters = {
         animation: true,
         scale: 1.2,
         name: 'Emby',
-        attacks:[attacks.emby.Tackle, attacks.emby.Fireball]
+        attacks:[attacks.emby.Tackle, attacks.emby.Fireball],
+        healthBasic:75,
+        healthPerLv: 5,
     },
     Draggle:{
         position:{
@@ -27,7 +29,9 @@ const monsters = {
         scale: 1,
         isEnemy: true,
         name: 'Draggle',
-        attacks:[attacks.draggle.Tackle,attacks.draggle.RazorLeaf]
+        attacks:[attacks.draggle.Tackle,attacks.draggle.RazorLeaf],
+        healthBasic: 50,
+        healthPerLv: 10,
     },
     
 }

@@ -8,7 +8,7 @@ const battleBackground = new Sprite({position:{
     image: battleImage
 })
 
-let draggle,emby,renderedSprites,battleAnimationId,queue
+let draggle,emby,renderedSprites,battleAnimationId,queue,level
 const actions = ['Fight','Run']
 
 
@@ -22,10 +22,15 @@ function initBattle(){
     document.getElementById('enemyHealthBar').style.width = '100%'
     document.getElementById('enemyHealthBar').style.backgroundColor = 'rgb(84, 255, 150)'
 
-    draggle = new Monster(monsters.Draggle)
-    emby = new Monster(monsters.Emby)
+    monsterLevel = Math.floor(Math.random()*5 +1 )
+    document.getElementById('monsterLv').textContent = 'Lv'+monsterLevel
+
+    draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
+    emby = new Monster({...monsters.Emby,level : 10} )
     renderedSprites = [draggle,emby]
     queue = []
+    // low level 1~5
+    
 
     // monster apeared!  
     document.querySelector('#dialogueBox').style.display = 'block'
