@@ -228,18 +228,23 @@ body{
 }
 #dialogueBox::after{
     content: '\25BC';
-    position: relative;
+    position: absolute;
     font-size: 18px;
     margin-left: 12px;
-    top: -2px;
+    right: 40px;
+    bottom: 16px;
     animation: arrowDown 2s infinite ease;
 }
+#dialogueBox p{
+    display: flex;
+}
+
 @keyframes arrowDown{
     45%{
-        top: 3px;
+        bottom: 13px;
     }
     55%{
-        top: 2px;
+        bottom: 12px;
     }
 }
 #userInterface{

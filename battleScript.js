@@ -21,21 +21,23 @@ function initBattle(){
     document.getElementById('playerHealthBar').style.backgroundColor = 'rgb(84, 255, 150)'
     document.getElementById('enemyHealthBar').style.width = '100%'
     document.getElementById('enemyHealthBar').style.backgroundColor = 'rgb(84, 255, 150)'
-
+    
+    // low level 1~5
     monsterLevel = Math.floor(Math.random()*5 +1 )
     document.getElementById('monsterLv').textContent = 'Lv'+monsterLevel
 
     draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
-    emby = new Monster({...monsters.Emby,level : 10} )
+    emby = new Monster({...monsters.Emby, level: player.playerLv})
     renderedSprites = [draggle,emby]
     queue = []
-    // low level 1~5
     
+     document.getElementById('playerLv').textContent = 'Lv'+ emby.level
 
     // monster apeared!  
     document.querySelector('#dialogueBox').style.display = 'block'
     document.querySelector('#dialogueBox').textContent =   'A wild draggle apeared !'
 
+    console.log(emby.level,draggle.level);
     // Fight & Run button
     actions.forEach( action=>{
         const button = document.createElement('button')
@@ -130,7 +132,14 @@ function playerAttack(e,player,enemyMonster){
         renderedSprites
     })
     // draggle death
-    checkHealth(enemyMonster)
+    if(enemyMonster.health <= 0){
+        queue.push(()=>{
+            enemyMonster.faint()
+            player.levelUp(enemyMonster)
+        })
+        backToMap()
+        return
+    }
 }
 
 // Enemy attacks
@@ -143,31 +152,31 @@ function enemyAttack(player,enemyMonster){
             renderedSprites
         })
         // emby death
-        checkHealth(player)
+        if(player.health <= 0){
+            queue.push(()=>{
+                player.faint()
+            })
+            backToMap()
+            return
+        }
     })
 }
-// Check target health
-function checkHealth(target){
-    if(target.health <= 0){
-        queue.push(()=>{
-            target.faint()
+// Back to Map
+function backToMap(){
+    queue.push(()=>{
+        gsap.to('#battle',{
+            opacity: 1,
+            zIndex: 15,
+            onComplete:()=>{
+                cancelAnimationFrame(battleAnimationId)
+                document.querySelector('#userInterface').style.display = 'none'
+                document.querySelector('#dialogueBox').style.display = 'none'
+                animate()
+                gsap.to('#battle',{
+                    opacity: 0
+                })
+                battle.initiated = false
+            }
         })
-        queue.push(()=>{
-            gsap.to('#battle',{
-                opacity: 1,
-                zIndex: 15,
-                onComplete:()=>{
-                    cancelAnimationFrame(battleAnimationId)
-                    document.querySelector('#userInterface').style.display = 'none'
-                    document.querySelector('#dialogueBox').style.display = 'none'
-                    animate()
-                    gsap.to('#battle',{
-                        opacity: 0
-                    })
-                    battle.initiated = false
-                }
-            })
-        })
-        return
-    }
+    })
 }

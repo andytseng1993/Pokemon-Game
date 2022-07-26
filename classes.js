@@ -21,6 +21,8 @@ class Sprite{
         animation = false,
         scale = 1,
         rotation = 0,
+        experience = 0,
+        playerLv = 1
     }){
         this.position = position
         this.image = new Image()
@@ -35,7 +37,8 @@ class Sprite{
         this.scale = scale
         this.opacity = 1
         this.rotation = rotation
-        
+        this.playerLv = playerLv
+        this.experience = experience
     }
     draw(){
         ctx.save()
@@ -65,6 +68,7 @@ class Sprite{
         if(this.frames.max>1) this.frames.elapes++
         if(this.frames.elapes % this.frames.hold === 0) this.frames.val= (++this.frames.val)% this.frames.max
     }
+
 }
 
 class Monster extends Sprite{
@@ -79,9 +83,9 @@ class Monster extends Sprite{
         isEnemy = false,
         name,
         attacks,
-        level,
         healthBasic,
-        healthPerLv
+        healthPerLv,
+        level = 1
     }){
         super({
             position,
@@ -122,9 +126,10 @@ class Monster extends Sprite{
             healthBar = '#playerHealthBar'
             rotation = -2.5
         }
-        enemy.setHealth(enemy.health,attack.damage)
+        enemy.setHealth(enemy.health,(attack.damage+this.level*attack.damagePerLv))
         // enemy.health -= attack.damage
         console.log(enemy.name,enemy.health);
+        if(enemy.health<0) enemy.health= 0
         let healthPercent = enemy.health*100/(enemy.healthBasic+ enemy.healthPerLv * enemy.level)
 
         let healthColor = 'rgb(84, 255, 150)'
@@ -259,5 +264,20 @@ class Monster extends Sprite{
         gsap.to(this,{
             opacity:0
         })
+    }
+    levelUp(enemyMonster){
+        document.querySelector('#dialogueBox').style.display = 'block'
+        document.querySelector('#dialogueBox').textContent = this.name +' gained '+ gainedExp[enemyMonster.level] +' Exp. points !'
+        player.experience +=  gainedExp[enemyMonster.level]
+        if(player.experience > playerExp[player.playerLv]){
+            player.experience -=  playerExp[player.playerLv]
+            player.playerLv+=1
+            const par = document.createElement('p')
+            par.textContent = this.name + ' grew to level '+ player.playerLv+' !' 
+            document.querySelector('#dialogueBox').append(par)
+            gsap.to()
+            document.getElementById('playerLv').textContent = 'Lv'+  player.playerLv
+        }
+        console.log(player.playerLv,player.experience);
     }
 }
