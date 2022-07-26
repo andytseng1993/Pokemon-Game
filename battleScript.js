@@ -135,6 +135,8 @@ function playerAttack(e,player,enemyMonster){
     if(enemyMonster.health <= 0){
         queue.push(()=>{
             enemyMonster.faint()
+        })
+        queue.push(()=>{
             player.levelUp(enemyMonster)
         })
         backToMap()

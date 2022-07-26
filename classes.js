@@ -259,25 +259,43 @@ class Monster extends Sprite{
         document.querySelector('#dialogueBox').style.display = 'block'
         document.querySelector('#dialogueBox').textContent = this.name + ' faint !'
         gsap.to(this.position,{
-            y:this.position.y+20
+            y:this.position.y+10
         })
         gsap.to(this,{
-            opacity:0
+            opacity:0,
+            onComplete:()=>{
+                gsap.to(this.position,{
+                    y:this.position.y-10
+                })  
+            }
         })
     }
     levelUp(enemyMonster){
         document.querySelector('#dialogueBox').style.display = 'block'
         document.querySelector('#dialogueBox').textContent = this.name +' gained '+ gainedExp[enemyMonster.level] +' Exp. points !'
         player.experience +=  gainedExp[enemyMonster.level]
-        if(player.experience > playerExp[player.playerLv]){
-            player.experience -=  playerExp[player.playerLv]
-            player.playerLv+=1
-            const par = document.createElement('p')
-            par.textContent = this.name + ' grew to level '+ player.playerLv+' !' 
-            document.querySelector('#dialogueBox').append(par)
-            gsap.to()
-            document.getElementById('playerLv').textContent = 'Lv'+  player.playerLv
-        }
+        let expPercent = player.experience/playerExp[player.playerLv]*100
+        if(expPercent>100) expPercent=100
+        gsap.to('.expBar',{
+            width : expPercent+'%',
+            onComplete:()=>{
+                if(player.experience > playerExp[player.playerLv]){
+                    document.querySelector('.expBar').style.width = '0%'
+                    player.experience -=  playerExp[player.playerLv]
+                    player.playerLv+=1
+                    const par = document.createElement('p')
+                    par.textContent = this.name + ' grew to level '+ player.playerLv+' !' 
+                    document.querySelector('#dialogueBox').append(par)
+                    document.getElementById('playerLv').textContent = 'Lv'+  player.playerLv
+                    expPercent = player.experience/playerExp[player.playerLv]*100
+                    gsap.to('.expBar',{
+                        width : expPercent+'%'
+                    })
+                }
+            }
+        })
+        
+        
         console.log(player.playerLv,player.experience);
     }
 }

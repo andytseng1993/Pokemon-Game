@@ -157,6 +157,7 @@ body{
     padding: 3px 10px 3px 10px;
     color: rgb(255, 242, 0);
     background: linear-gradient(0deg, rgba(7,71,25,1) 0%, rgba(12,141,48,1) 100%);
+    margin-bottom: 10px;
 }
 .hpBar{
     position: relative;
@@ -168,7 +169,7 @@ body{
     box-shadow: inset 0px 3px 1px rgba(0, 0, 0, 0.4);
 }
 .hp{
-    height: 9px;
+    height: 11px;
     /* 100% :rgb(84, 255, 150) 50%~20% :rgb(255, 239, 18) 20%:rgb(253, 68, 12)*/
     background-color: rgb(84, 255, 150); 
     border-radius: 7px 0px 0px 7px;
@@ -187,17 +188,17 @@ body{
 
 }
 .pokemonName.self{
-    top: 314px;
-    left: 600px;
-    border-radius: 20px;
+    top: 286px;
+    left: 586px;
     padding: 15px 20px;
-    border : 8px solid rgb(0, 124, 56);
-    border-radius: 25px 5px 25px 10px;
+    border: 8px solid rgb(0, 124, 56);
+    border-radius: 25px 5px 8px 10px;
+    z-index: 1;
 }
 .symbol{
     position: absolute;
     left: 375px;
-    top: 54px;
+    top: 64px;
     font-size: 120px;
     color: rgb(0, 32, 20);
     font-family: 'Press Start 2P', cursive;
@@ -205,11 +206,36 @@ body{
 }
 .symbolself{
     position: absolute;
-    left: 550px;
-    top: 335px;
-    font-size: 120px;
+    left: 549px;
+    top: 333px;
+    font-size: 118px;
     color: rgb(0, 124, 56);
     font-family: 'Press Start 2P', cursive;
+    z-index: 10;
+}
+.exp{
+    width: 339px;
+    position: absolute;
+    left: 577px;
+    top: 392px;
+    z-index: 5;
+}
+
+.expBar{
+    width: 0%;
+    height: 15px;
+    border-radius: 0px 0px 5px 0px;
+    background-color: rgb(39, 60, 223);
+}
+.expBar:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 7px;
+    border-radius: 0px 0px 19px 0px;
+    border: solid rgb(0, 124, 56) 6px;
+    border-left: none;
+
 }
 #dialogueBox{
     position: absolute;
