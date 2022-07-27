@@ -12,7 +12,7 @@ let draggle,emby,renderedSprites,battleAnimationId,queue,level
 const actions = ['Fight','Run']
 
 
-function initBattle(){
+function initBattle(battleLevel){
     document.getElementById('battle').style.display = 'none'
     document.getElementById('userInterface').style.display = 'block'
     document.getElementById('action').replaceChildren()
@@ -22,8 +22,23 @@ function initBattle(){
     document.getElementById('enemyHealthBar').style.width = '100%'
     document.getElementById('enemyHealthBar').style.backgroundColor = 'rgb(84, 255, 150)'
     
-    // low level 1~5
-    monsterLevel = Math.floor(Math.random()*5 +1 )
+    // different moster level
+    let monsterLevel
+    switch (battleLevel) {
+        case 'mid':
+            monsterLevel=Math.floor(Math.random()*5 +6 )
+            break;
+        case 'high':
+            monsterLevel=Math.floor(Math.random()*5 +11 )
+            break;
+        case 'boss':
+            monsterLevel=Math.floor(Math.random()*5 +15 )
+            break;
+        default:
+            monsterLevel=Math.floor(Math.random()*3 +1 )
+            break;
+    }
+    
     document.getElementById('monsterLv').textContent = 'Lv'+monsterLevel
 
     draggle = new Monster({...monsters.Draggle ,level:monsterLevel})

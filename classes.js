@@ -7,8 +7,8 @@ class Boundary{
         this.height = 51
     }
     draw(){
-        ctx.fillStyle = 'rgba(255,0,0,0.2)'
-        ctx.fillRect(this.position.x,this.position.y,this.width,this.height)
+        // ctx.fillStyle = 'rgba(255,0,0,0.2)'
+        // ctx.fillRect(this.position.x,this.position.y,this.width,this.height)
     }
 }
 
@@ -305,12 +305,6 @@ class Monster extends Sprite{
         if(i===0){
             gsap.to('.expBar',{
                 width : expPercent+'%',
-                onComplete:()=>{
-                    const par = document.createElement('p')
-                    par.textContent = this.name + ' grew to level '+ player.playerLv+' !' 
-                    document.querySelector('#dialogueBox').append(par)
-                    document.getElementById('playerLv').textContent = 'Lv'+  player.playerLv
-                }
             })
             return  
         }
