@@ -149,6 +149,7 @@ class Monster extends Sprite{
                     x:this.position.x+movementDistance*2,
                     duration:0.1,
                     onComplete:()=>{
+                        audio.Hit.play()
                         //enemy gets hit
                         gsap.to(healthBar,{
                             width: healthPercent +'%',
@@ -186,10 +187,12 @@ class Monster extends Sprite{
                     rotation
                 })
                 renderedSprites.splice(1,0,fireball)
+                audio.Fireball.play()
                 gsap.to(fireball.position,{
                     x: enemy.position.x,
                     y: enemy.position.y,
                     onComplete:()=>{
+                        audio.Explosion.play()
                         //enemy gets hit
                         gsap.to(healthBar,{
                             width: healthPercent +'%',
@@ -233,6 +236,7 @@ class Monster extends Sprite{
                         y: enemy.position.y,
                         onComplete:()=>{
                             //enemy gets hit
+                            audio.RazorLeaf.play()
                             gsap.to(healthBar,{
                                 width: healthPercent +'%',
                                 backgroundColor: healthColor
@@ -288,6 +292,7 @@ class Monster extends Sprite{
                 width : '100%',
                 repeat: i,
                 onComplete:()=>{
+                    audio.LevelUp.play()
                     document.querySelector('.expBar').style.width = '0%'
                     gsap.to('.expBar',{
                         width : expPercent+'%',

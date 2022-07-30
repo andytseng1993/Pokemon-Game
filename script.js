@@ -4,6 +4,10 @@ const ctx = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
 
+audio.Map.once('unlock', function() {
+    audio.Map.play();
+});
+
 /* collisions */
 function jsonData(data,arrayMap){
     //weidth = 70 tiles, height = 40titles
@@ -166,181 +170,18 @@ function animate(){
     if(battle.initiated) return
     /* detect in Battle Zones */
     if(keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed){
-        for(let i =0; i < lowBattleZones.length; i++){
-            const battleZone = lowBattleZones[i]
-            const overlappingArea = 
-                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
-                Math.max(battleZone.position.x, player.position.x)) * 
-                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
-                Math.max(battleZone.position.y, player.position.y))
-            if(rectangularCollision({
-                rectangle1: player,
-                rectangle2: battleZone
-            })  && overlappingArea > (player.width*player.height)/2 
-                && Math.random() <0.02
-            ){
-                console.log('low Battle');
-                /* cancel animation loop */
-                window.cancelAnimationFrame(animationId)
-                battle.initiated = true
-                document.getElementById('battle').style.display = 'block'
-                gsap.to('#battle',{
-                    opacity:1,
-                    repeat:3,
-                    yoyo:true,
-                    duration: 0.3,
-                    onComplete(){
-                        gsap.to('#battle',{
-                            opacity:1,
-                            duration: 0.4,
-                            onComplete(){
-                                /* activate a new animation loop */
-                                initBattle('low')
-                                animationBattle()
-                                gsap.to('#battle',{
-                                    opacity:0,
-                                    duration: 0.4,
-                                })
-                            }
-                        })
-                    }
-                })
-                
-                
-                break
-            }
-        }
+
+        /* detect in low level Battle Zones */
+        battleZone(lowBattleZones,animationId)
+        
         /* detect in mid level Battle Zones */
-        for(let i =0; i < midBattleZones.length; i++){
-            const battleZone = midBattleZones[i]
-            const overlappingArea = 
-                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
-                Math.max(battleZone.position.x, player.position.x)) * 
-                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
-                Math.max(battleZone.position.y, player.position.y))
-            if(rectangularCollision({
-                rectangle1: player,
-                rectangle2: battleZone
-            })  && overlappingArea > (player.width*player.height)/2 
-                && Math.random() <0.02
-            ){
-                console.log('mid Battle');
-                /* cancel animation loop */
-                window.cancelAnimationFrame(animationId)
-                battle.initiated = true
-                document.getElementById('battle').style.display = 'block'
-                gsap.to('#battle',{
-                    opacity:1,
-                    repeat:3,
-                    yoyo:true,
-                    duration: 0.3,
-                    onComplete(){
-                        gsap.to('#battle',{
-                            opacity:1,
-                            duration: 0.4,
-                            onComplete(){
-                                /* activate a new animation loop */
-                                initBattle('mid')
-                                animationBattle()
-                                gsap.to('#battle',{
-                                    opacity:0,
-                                    duration: 0.4,
-                                })
-                            }
-                        })
-                    }
-                })
-                
-                
-                break
-            }
-        }
+        battleZone(midBattleZones,animationId,'mid')
+        
         /* detect in high level Battle Zones */
-        for(let i =0; i < highBattleZones.length; i++){
-            const battleZone = highBattleZones[i]
-            const overlappingArea = 
-                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
-                Math.max(battleZone.position.x, player.position.x)) * 
-                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
-                Math.max(battleZone.position.y, player.position.y))
-            if(rectangularCollision({
-                rectangle1: player,
-                rectangle2: battleZone
-            })  && overlappingArea > (player.width*player.height)/2 
-                && Math.random() <0.01
-            ){
-                console.log('high Battle');
-                /* cancel animation loop */
-                window.cancelAnimationFrame(animationId)
-                battle.initiated = true
-                document.getElementById('battle').style.display = 'block'
-                gsap.to('#battle',{
-                    opacity:1,
-                    repeat:3,
-                    yoyo:true,
-                    duration: 0.3,
-                    onComplete(){
-                        gsap.to('#battle',{
-                            opacity:1,
-                            duration: 0.4,
-                            onComplete(){
-                                /* activate a new animation loop */
-                                initBattle('high')
-                                animationBattle()
-                                gsap.to('#battle',{
-                                    opacity:0,
-                                    duration: 0.4,
-                                })
-                            }
-                        })
-                    }
-                })
-                break
-            }
-        }
+        battleZone(highBattleZones,animationId,'high')
+        
         /* detect in boss level Battle Zones */
-        for(let i =0; i < bossBattleZones.length; i++){
-            const battleZone = bossBattleZones[i]
-            const overlappingArea = 
-                (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
-                Math.max(battleZone.position.x, player.position.x)) * 
-                (Math.min(battleZone.position.y+battleZone.height, player.position.y+player.height)-
-                Math.max(battleZone.position.y, player.position.y))
-            if(rectangularCollision({
-                rectangle1: player,
-                rectangle2: battleZone
-            })  && overlappingArea > (player.width*player.height)/2 
-                && Math.random() <0.01
-            ){
-                console.log('boss Battle');
-                /* cancel animation loop */
-                window.cancelAnimationFrame(animationId)
-                battle.initiated = true
-                document.getElementById('battle').style.display = 'block'
-                gsap.to('#battle',{
-                    opacity:1,
-                    repeat:3,
-                    yoyo:true,
-                    duration: 0.3,
-                    onComplete(){
-                        gsap.to('#battle',{
-                            opacity:1,
-                            duration: 0.4,
-                            onComplete(){
-                                /* activate a new animation loop */
-                                initBattle('boss')
-                                animationBattle()
-                                gsap.to('#battle',{
-                                    opacity:0,
-                                    duration: 0.4,
-                                })
-                            }
-                        })
-                    }
-                })
-                break
-            }
-        }
+        battleZone(bossBattleZones,animationId,'boss')
     }
     
 
@@ -488,9 +329,9 @@ window.addEventListener('keyup',(e)=>{
     }
 })
 
-function battleZone(){
-    for(let i =0; i < lowBattleZones.length; i++){
-            const battleZone = lowBattleZones[i]
+function battleZone(BattleZones,animationId,zoneName){
+    for(let i =0; i < BattleZones.length; i++){
+            const battleZone = BattleZones[i]
             const overlappingArea = 
                 (Math.min(battleZone.position.x+battleZone.width, player.position.x+player.width)-
                 Math.max(battleZone.position.x, player.position.x)) * 
@@ -502,10 +343,11 @@ function battleZone(){
             })  && overlappingArea > (player.width*player.height)/2 
                 && Math.random() <0.02
             ){
-                console.log('lowBattle');
                 /* cancel animation loop */
                 window.cancelAnimationFrame(animationId)
                 battle.initiated = true
+                audio.Map.stop()
+                audio.InitBattle.play()
                 document.getElementById('battle').style.display = 'block'
                 gsap.to('#battle',{
                     opacity:1,
@@ -518,7 +360,7 @@ function battleZone(){
                             duration: 0.4,
                             onComplete(){
                                 /* activate a new animation loop */
-                                initBattle()
+                                initBattle(zoneName)
                                 animationBattle()
                                 gsap.to('#battle',{
                                     opacity:0,
@@ -528,8 +370,6 @@ function battleZone(){
                         })
                     }
                 })
-                
-                
                 break
             }
         }

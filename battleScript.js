@@ -27,15 +27,19 @@ function initBattle(battleLevel){
     switch (battleLevel) {
         case 'mid':
             monsterLevel=Math.floor(Math.random()*5 +6 )
+            audio.MidBattle.play()
             break;
         case 'high':
             monsterLevel=Math.floor(Math.random()*5 +11 )
+            audio.HighBattle.play()
             break;
         case 'boss':
             monsterLevel=Math.floor(Math.random()*5 +15 )
+            audio.FinalArea.play()
             break;
         default:
             monsterLevel=Math.floor(Math.random()*3 +1 )
+            audio.Fight.play()
             break;
     }
     
@@ -102,6 +106,11 @@ function initBattle(battleLevel){
                             opacity: 1,
                             zIndex: 15,
                             onComplete:()=>{
+                                audio.Fight.stop()
+                                audio.MidBattle.stop()
+                                audio.HighBattle.stop()
+                                audio.FinalArea.stop()
+                                audio.Map.play()
                                 cancelAnimationFrame(battleAnimationId)
                                 document.querySelector('#userInterface').style.display = 'none'
                                 document.querySelector('#dialogueBox').style.display = 'none'
@@ -150,6 +159,7 @@ function playerAttack(e,player,enemyMonster){
     if(enemyMonster.health <= 0){
         queue.push(()=>{
             enemyMonster.faint()
+            audio.Success.play()
         })
         queue.push(()=>{
             player.levelUp(enemyMonster)
@@ -172,6 +182,7 @@ function enemyAttack(player,enemyMonster){
         if(player.health <= 0){
             queue.push(()=>{
                 player.faint()
+                audio.GameOver.play()
             })
             backToMap()
             return
@@ -189,6 +200,11 @@ function backToMap(){
                 document.querySelector('#userInterface').style.display = 'none'
                 document.querySelector('#dialogueBox').style.display = 'none'
                 animate()
+                audio.Fight.stop()
+                audio.MidBattle.stop()
+                audio.HighBattle.stop()
+                audio.FinalArea.stop()
+                audio.Map.play()
                 gsap.to('#battle',{
                     opacity: 0
                 })
