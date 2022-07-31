@@ -8,7 +8,7 @@ const attacks = {
         },
         Fireball:{
             name: 'Fireball',
-            damage: 97,
+            damage: 10,
             damagePerLv: 3,
             type: 'Fire'
         },
@@ -16,7 +16,7 @@ const attacks = {
     draggle:{
         Tackle:{
             name: 'Tackle',
-            damage: 70,
+            damage: 8,
             damagePerLv: 1,
             type: 'Normal'
         },

@@ -8,7 +8,7 @@ const battleBackground = new Sprite({position:{
     image: battleImage
 })
 
-let draggle,emby,renderedSprites,battleAnimationId,queue,level
+let draggle,emby,renderedSprites,battleAnimationId,queue,level,enemy,giantFrog,giantRacoon
 const actions = ['Fight','Run']
 
 
@@ -24,37 +24,48 @@ function initBattle(battleLevel){
     
     // different moster level
     let monsterLevel
+    
+    draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
+    demon = new Monster({...monsters.Demon ,level:monsterLevel})
+    giantFrog = new Monster({...monsters.GiantFrog ,level:monsterLevel})
+    giantRacoon = new Monster({...monsters.GiantRacoon ,level:monsterLevel})
+    emby = new Monster({...monsters.Emby, level: player.playerLv})
+    renderedSprites = [emby]
+    queue = []
+    
     switch (battleLevel) {
         case 'mid':
             monsterLevel=Math.floor(Math.random()*5 +6 )
+            if(Math.random()>0.5) renderedSprites.unshift(giantFrog)
+            else renderedSprites.unshift(draggle)
             audio.MidBattle.play()
             break;
         case 'high':
             monsterLevel=Math.floor(Math.random()*5 +11 )
+            if(Math.random()>0.5) renderedSprites.unshift(demon)
+            else renderedSprites.unshift(giantFrog)
             audio.HighBattle.play()
             break;
         case 'boss':
             monsterLevel=Math.floor(Math.random()*5 +15 )
+            if(Math.random()>0.5) renderedSprites.unshift(demon)
+            else renderedSprites.unshift(giantRacoon)
             audio.FinalArea.play()
             break;
         default:
             monsterLevel=Math.floor(Math.random()*3 +1 )
+            renderedSprites.unshift(draggle)
             audio.Fight.play()
             break;
     }
-    
-    document.getElementById('monsterLv').textContent = 'Lv'+monsterLevel
 
-    draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
-    emby = new Monster({...monsters.Emby, level: player.playerLv})
-    renderedSprites = [draggle,emby]
-    queue = []
-    
-     document.getElementById('playerLv').textContent = 'Lv'+ emby.level
+    document.getElementById('monsterName').textContent = renderedSprites[0].name
+    document.getElementById('monsterLv').textContent = 'Lv'+monsterLevel
+    document.getElementById('playerLv').textContent = 'Lv'+ emby.level
 
     // monster apeared!  
     document.querySelector('#dialogueBox').style.display = 'block'
-    document.querySelector('#dialogueBox').textContent =   'A wild draggle apeared !'
+    document.querySelector('#dialogueBox').textContent =   'A wild '+renderedSprites[0].name+' apeared !'
 
     console.log(emby.level,draggle.level);
     // Fight & Run button
@@ -125,7 +136,7 @@ function initBattle(battleLevel){
                 }
                 else{
                     document.querySelector('#dialogueBox').style.display = 'block'
-                    document.querySelector('#dialogueBox').textContent =   ' You failed to get away !'
+                    document.querySelector('#dialogueBox').textContent =   ' You failed to run away !'
                     enemyAttack(emby,draggle)
                 }
             }

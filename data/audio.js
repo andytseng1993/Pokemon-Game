@@ -112,7 +112,7 @@ const audio = {
     Success: new Howl({
         src:'../Sounds/Success.wav',
         html5: true,
-        volume: 0.2,
+        volume: 0.3,
     }),
 
 }

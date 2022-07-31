@@ -120,7 +120,7 @@ body{
     left: 100px;
     background-color: white;
     padding: 8px 15px 5px;
-    width: 280px;
+    width: 320px;
     border : 8px ridge rgb(5, 125, 79);
     border-radius: 20px 5px 20px 5px;
     font-family: 'Press Start 2P', cursive;
@@ -133,7 +133,7 @@ body{
     margin-bottom: 15px;
 }
 .pokemonName .name{
-    font-size: 20px;
+    font-size: 19px;
     text-shadow: 3px 2px 1px rgba(0, 0, 0, 0.2);
 }
 .Lv{
@@ -190,6 +190,7 @@ body{
 .pokemonName.self{
     top: 286px;
     left: 586px;
+    width: 280px;
     padding: 15px 20px;
     border: 8px solid rgb(0, 124, 56);
     border-radius: 25px 5px 8px 10px;
@@ -197,7 +198,7 @@ body{
 }
 .symbol{
     position: absolute;
-    left: 375px;
+    left: 385px;
     top: 64px;
     font-size: 120px;
     color: rgb(0, 32, 20);
