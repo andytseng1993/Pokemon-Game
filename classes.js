@@ -118,7 +118,7 @@ class Monster extends Sprite{
         // dialogueBox
         document.querySelector('#dialogueBox').style.display = 'block'
         document.querySelector('#dialogueBox').textContent = this.name + ' used '+ attack.name + '!'
-        
+        let bear
         let rotation = 1
         let healthBar ='#enemyHealthBar'
         
@@ -194,21 +194,7 @@ class Monster extends Sprite{
                     onComplete:()=>{
                         audio.Explosion.play()
                         //enemy gets hit
-                        gsap.to(healthBar,{
-                            width: healthPercent +'%',
-                            backgroundColor: healthColor
-                        })
-                        gsap.to(enemy.position,{x:enemy.position.x+10,
-                            duration:0.05,
-                            yoyo:true,
-                            repeat:3,
-                        })
-                        gsap.to(enemy,{
-                            opacity:0,
-                            repeat:5,
-                            yoyo: true,
-                            duration: 0.08
-                        })
+                        afterHit(healthBar,healthPercent,healthColor,enemy)
                         renderedSprites.splice(1,1)
 
                     }
@@ -228,7 +214,7 @@ class Monster extends Sprite{
                             hold: 5
                         },
                         animation: true,
-                        scale: 3.5
+                        scale: 4
                     })
                     renderedSprites.splice(2,0,razorLeaf) 
                     gsap.from(razorLeaf.position,{
@@ -237,26 +223,115 @@ class Monster extends Sprite{
                         onComplete:()=>{
                             //enemy gets hit
                             audio.RazorLeaf.play()
-                            gsap.to(healthBar,{
-                                width: healthPercent +'%',
-                                backgroundColor: healthColor
-                            })
-                            gsap.to(enemy.position,{x:enemy.position.x+10,
-                                duration:0.05,
-                                yoyo:true,
-                                repeat:3,
-                            })
-                            gsap.to(enemy,{
-                                opacity:0,
-                                repeat:5,
-                                yoyo: true,
-                                duration: 0.08
-                            })
+                            afterHit(healthBar,healthPercent,healthColor,enemy)
                             renderedSprites.splice(2,1)
     
                         }
                     })
                     break
+                    case 'RockThrow':
+                        const rockThrowImage = new Image()
+                        rockThrowImage.src = './image/rockThrow.png'
+                        const rockThrow = new Sprite({
+                            position:{
+                                x: enemy.position.x-10,
+                                y: enemy.position.y-20
+                            },
+                            image: rockThrowImage,
+                            frames: {
+                                max:14,
+                                hold: 4
+                            },
+                            animation: true,
+                            scale: 4
+                        })
+                        renderedSprites.splice(2,0,rockThrow) 
+                        gsap.from(rockThrow.position,{
+                            x: enemy.position.x-10,
+                            y: enemy.position.y-100,
+                            duration: 0.7,
+                            onComplete:()=>{
+                                //enemy gets hit
+                                audio.Hit.play()
+                                afterHit(healthBar,healthPercent,healthColor,enemy)
+                                renderedSprites.splice(2,1)
+                            }
+                        })
+                        break
+                case 'BearScratch':
+                    const bearScratchImage = new Image()
+                    bearScratchImage.src = './image/bearScratch.png'
+                    const bearScratch = new Sprite({
+                        position:{
+                            x: this.position.x,
+                            y: this.position.y
+                        },
+                        image: bearScratchImage,
+                        frames: {
+                            max:4,
+                            hold: 10
+                        },
+                        animation: true,
+                        scale: 2.7
+                    })
+                    const clawImage = new Image()
+                    clawImage.src = './image/claw.png'
+                    const claw = new Sprite({
+                        position:{
+                            x: enemy.position.x,
+                            y: enemy.position.y
+                        },
+                        image: clawImage,
+                        frames: {
+                            max:4,
+                            hold: 10
+                        },
+                        animation: true,
+                        scale: 3.2
+                    })
+                    renderedSprites.splice(2,0,claw)
+                    bear = renderedSprites.splice(0,1,bearScratch) 
+                    gsap.from(claw.position,{
+                        x: enemy.position.x,
+                        y: enemy.position.y,
+                        onComplete:()=>{
+                            //enemy gets hit
+                            audio.RazorLeaf.play()
+                            afterHit(healthBar,healthPercent,healthColor,enemy)
+                            renderedSprites.splice(2,1)
+                            renderedSprites.splice(0,1,...bear) 
+                        }
+                    })
+                    break
+                case 'BodySlam':
+                    const bodySlamImage = new Image()
+                    bodySlamImage.src = './image/bearJump.png'
+                    const  bodySlam = new Sprite({
+                        position:{
+                            x: this.position.x,
+                            y: this.position.y
+                        },
+                        image: bodySlamImage,
+                        frames: {
+                            max:5,
+                            hold: 11
+                        },
+                        animation: true,
+                        scale: 3
+                    })
+                    bear = renderedSprites.splice(0,1,bodySlam) 
+                    gsap.to(bodySlam.position,{
+                        x: this.position.x,
+                        y: this.position.y-40,
+                        onComplete:()=>{
+                            //enemy gets hit
+                            audio.Hit2.play()
+                            afterHit(healthBar,healthPercent,healthColor,enemy)
+                            renderedSprites.splice(0,1,...bear)
+                        }
+                    })
+                    break
+                
         }
     }
     faint(){
@@ -314,4 +389,22 @@ class Monster extends Sprite{
             return  
         }
     }
+}
+
+function afterHit(healthBar,healthPercent,healthColor,enemy){
+    gsap.to(healthBar,{
+        width: healthPercent +'%',
+        backgroundColor: healthColor
+    })
+    gsap.to(enemy.position,{x:enemy.position.x+10,
+        duration:0.05,
+        yoyo:true,
+        repeat:3,
+    })
+    gsap.to(enemy,{
+        opacity:0,
+        repeat:5,
+        yoyo: true,
+        duration: 0.08
+    })
 }

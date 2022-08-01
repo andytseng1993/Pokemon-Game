@@ -13,8 +13,8 @@ const monsters = {
         scale: 1.2,
         name: 'Emby',
         attacks:[attacks.emby.Tackle, attacks.emby.Fireball],
-        healthBasic:75,
-        healthPerLv: 5,
+        healthBasic: 50,
+        healthPerLv: 15,
     },
     Draggle:{
         position:{
@@ -31,7 +31,7 @@ const monsters = {
         name: 'Draggle',
         attacks:[attacks.draggle.Tackle,attacks.draggle.RazorLeaf],
         healthBasic: 50,
-        healthPerLv: 10,
+        healthPerLv: 5,
     },
     Demon:{
         position:{
@@ -46,9 +46,9 @@ const monsters = {
         scale: 2.7,
         isEnemy: true,
         name: 'Demon',
-        attacks:[attacks.draggle.Tackle,attacks.draggle.RazorLeaf],
-        healthBasic: 50,
-        healthPerLv: 10,
+        attacks:[attacks.demon.RockThrow,attacks.demon.Tackle],
+        healthBasic: 70,
+        healthPerLv: 12,
     },
     GiantFrog:{
         position:{
@@ -63,9 +63,9 @@ const monsters = {
         scale: 2.7,
         isEnemy: true,
         name: 'GiantFrog',
-        attacks:[attacks.draggle.Tackle,attacks.draggle.RazorLeaf],
-        healthBasic: 50,
-        healthPerLv: 10,
+        attacks:[attacks.giantFrog.Tackle,attacks.giantFrog.RazorLeaf],
+        healthBasic: 60,
+        healthPerLv: 8,
     },
     GiantRacoon:{
         position:{
@@ -80,9 +80,9 @@ const monsters = {
         scale: 2.7,
         isEnemy: true,
         name: 'GiantRacoon',
-        attacks:[attacks.draggle.Tackle,attacks.draggle.RazorLeaf],
-        healthBasic: 50,
-        healthPerLv: 10,
+        attacks:[attacks.giantRacoon.BodySlam,attacks.giantRacoon.BearScratch],
+        healthBasic: 100,
+        healthPerLv: 13,
     },
 }
 

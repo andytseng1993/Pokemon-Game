@@ -91,6 +91,7 @@ body{
     display: flex;
     align-self: flex-start;
     color: white;
+    margin-left: 20px;
     text-shadow: 4px 4px 3px rgba(0, 0, 0, 0.6);
 }
 
@@ -199,7 +200,7 @@ body{
 .symbol{
     position: absolute;
     left: 385px;
-    top: 64px;
+    top: 63px;
     font-size: 120px;
     color: rgb(0, 32, 20);
     font-family: 'Press Start 2P', cursive;

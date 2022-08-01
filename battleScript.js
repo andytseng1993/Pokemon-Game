@@ -8,7 +8,7 @@ const battleBackground = new Sprite({position:{
     image: battleImage
 })
 
-let draggle,emby,renderedSprites,battleAnimationId,queue,level,enemy,giantFrog,giantRacoon
+let draggle,emby,renderedSprites,battleAnimationId,queue,level,enemy,giantFrog,giantRacoon,monsterLevel
 const actions = ['Fight','Run']
 
 
@@ -23,12 +23,6 @@ function initBattle(battleLevel){
     document.getElementById('enemyHealthBar').style.backgroundColor = 'rgb(84, 255, 150)'
     
     // different moster level
-    let monsterLevel
-    
-    draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
-    demon = new Monster({...monsters.Demon ,level:monsterLevel})
-    giantFrog = new Monster({...monsters.GiantFrog ,level:monsterLevel})
-    giantRacoon = new Monster({...monsters.GiantRacoon ,level:monsterLevel})
     emby = new Monster({...monsters.Emby, level: player.playerLv})
     renderedSprites = [emby]
     queue = []
@@ -36,24 +30,43 @@ function initBattle(battleLevel){
     switch (battleLevel) {
         case 'mid':
             monsterLevel=Math.floor(Math.random()*5 +6 )
-            if(Math.random()>0.5) renderedSprites.unshift(giantFrog)
-            else renderedSprites.unshift(draggle)
+            if(Math.random()>0.4){
+                y = new Monster({...monsters.GiantFrog ,level:monsterLevel})
+                renderedSprites.unshift(giantFrog)
+            }
+            else{
+                draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
+                renderedSprites.unshift(draggle)
+            }
             audio.MidBattle.play()
             break;
         case 'high':
             monsterLevel=Math.floor(Math.random()*5 +11 )
-            if(Math.random()>0.5) renderedSprites.unshift(demon)
-            else renderedSprites.unshift(giantFrog)
+            if(Math.random()>0.4){
+                demon = new Monster({...monsters.Demon ,level:monsterLevel})
+                renderedSprites.unshift(demon)
+            }
+            else {
+                giantFrog = new Monster({...monsters.GiantFrog ,level:monsterLevel})
+                renderedSprites.unshift(giantFrog)
+            }
             audio.HighBattle.play()
             break;
         case 'boss':
             monsterLevel=Math.floor(Math.random()*5 +15 )
-            if(Math.random()>0.5) renderedSprites.unshift(demon)
-            else renderedSprites.unshift(giantRacoon)
+            if(Math.random()>0.4){
+                giantRacoon = new Monster({...monsters.GiantRacoon ,level:monsterLevel})
+                renderedSprites.unshift(giantRacoon)
+            }
+            else {
+                demon = new Monster({...monsters.Demon ,level:monsterLevel})
+                renderedSprites.unshift(demon)
+            }
             audio.FinalArea.play()
             break;
         default:
             monsterLevel=Math.floor(Math.random()*3 +1 )
+            draggle = new Monster({...monsters.Draggle ,level:monsterLevel})
             renderedSprites.unshift(draggle)
             audio.Fight.play()
             break;
@@ -67,7 +80,6 @@ function initBattle(battleLevel){
     document.querySelector('#dialogueBox').style.display = 'block'
     document.querySelector('#dialogueBox').textContent =   'A wild '+renderedSprites[0].name+' apeared !'
 
-    console.log(emby.level,draggle.level);
     // Fight & Run button
     actions.forEach( action=>{
         const button = document.createElement('button')
@@ -78,6 +90,9 @@ function initBattle(battleLevel){
     par.textContent = 'What will Emby do ?'
     document.getElementById('action').append(par)
     document.querySelectorAll('#attackType button').forEach(button=>{
+        button.addEventListener('mouseenter',()=>{
+            audio.Menu.play()
+        })
         button.addEventListener('click',(e)=>{
             // Fight Action
             if(e.currentTarget.innerHTML==='Fight'){
@@ -91,14 +106,14 @@ function initBattle(battleLevel){
                 document.getElementById('attackType').textContent = 'Attack Type'
                 document.querySelectorAll('#action button').forEach(button=>{
                     button.addEventListener('click',(e)=>{
-                        console.log(e.currentTarget);
                         // player attacks
-                        playerAttack(e,emby,draggle)
+                        playerAttack(e,emby,renderedSprites[0])
                         // enemy attacks
-                        enemyAttack(emby,draggle)
+                        enemyAttack(emby,renderedSprites[0])
                     })
                     //Attack Type
                     button.addEventListener('mouseenter',(e)=>{
+                        audio.Menu.play()
                         const type = attacks.emby[e.currentTarget.textContent]
                         if(type.type === 'Fire') document.getElementById('attackType').style.color = 'rgb(255, 130, 101)'
                         else document.getElementById('attackType').style.color = 'white'
@@ -109,10 +124,25 @@ function initBattle(battleLevel){
             // choose to Run Action
             if(e.currentTarget.innerHTML==='Run'){
                 let run = Math.random()
-                if(run<0.4) {
+                if(run<0.6) {
                     document.querySelector('#dialogueBox').style.display = 'block'
                     document.querySelector('#dialogueBox').textContent =   ' You got away safely !'
                     queue.push(()=>{
+                        audio.RunAway.play()
+                        gsap.to(emby.position,{ 
+                            x:emby.position.x-40,
+                            duration:0.2,
+                            onComplete:()=>{
+                                gsap.to(emby.position,{
+                                    x:emby.position.x+40,
+                                    delay: 0.5,
+                                })
+                            }
+                        })
+                        gsap.to(emby,{
+                            opacity:0,
+                            duration: 0.5,
+                        })
                         gsap.to('#battle',{
                             opacity: 1,
                             zIndex: 15,
@@ -135,9 +165,10 @@ function initBattle(battleLevel){
                     })
                 }
                 else{
+                    audio.RunFailed.play()
                     document.querySelector('#dialogueBox').style.display = 'block'
                     document.querySelector('#dialogueBox').textContent =   ' You failed to run away !'
-                    enemyAttack(emby,draggle)
+                    enemyAttack(emby,renderedSprites[0])
                 }
             }
         })
@@ -173,6 +204,7 @@ function playerAttack(e,player,enemyMonster){
             audio.Success.play()
         })
         queue.push(()=>{
+            console.log(enemyMonster);
             player.levelUp(enemyMonster)
         })
         backToMap()

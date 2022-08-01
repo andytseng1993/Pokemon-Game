@@ -3,7 +3,6 @@ const audio = {
     Map: new Howl({
         src:'../Sounds/Village.mp3',
         html5: true,
-        autoplay: true,
         volume: 0.1,
         onplay:()=>{
             Looper = setTimeout(()=>{
@@ -84,6 +83,11 @@ const audio = {
         html5: true,
         volume: 0.2,
     }),
+    Hit2: new Howl({
+        src:'../Sounds/Hit2.wav',
+        html5: true,
+        volume: 0.2,
+    }),
     Fireball: new Howl({
         src:'../Sounds/Fireball.wav',
         html5: true,
@@ -107,12 +111,27 @@ const audio = {
     GameOver: new Howl({
         src:'../Sounds/GameOver.wav',
         html5: true,
-        volume: 0.4,
+        volume: 0.7,
     }),
     Success: new Howl({
         src:'../Sounds/Success.wav',
         html5: true,
         volume: 0.3,
+    }),
+    Menu: new Howl({
+        src:'../Sounds/Menu.wav',
+        html5: true,
+        volume: 0.3,
+    }),
+    RunAway: new Howl({
+        src:'../Sounds/RunAway.wav',
+        html5: true,
+        volume: 0.6,
+    }),
+    RunFailed: new Howl({
+        src:'../Sounds/RunFailed.wav',
+        html5: true,
+        volume: 0.6,
     }),
 
 }
