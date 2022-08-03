@@ -2,6 +2,14 @@ body{
     margin: 0;
     background-color: black;
 }
+.pokemon{
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    position: relative; 
+    user-select: none;
+    -webkit-user-select: none;
+}
 .overLapping{
     position: absolute;
     display: inline-block;

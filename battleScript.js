@@ -31,7 +31,7 @@ function initBattle(battleLevel){
         case 'mid':
             monsterLevel=Math.floor(Math.random()*5 +6 )
             if(Math.random()>0.4){
-                y = new Monster({...monsters.GiantFrog ,level:monsterLevel})
+                giantFrog = new Monster({...monsters.GiantFrog ,level:monsterLevel})
                 renderedSprites.unshift(giantFrog)
             }
             else{
