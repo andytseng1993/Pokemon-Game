@@ -172,7 +172,7 @@ class Monster extends Sprite{
                 break
             case 'Fireball':
                 const fireballImage = new Image()
-                fireballImage.src = './image/fireball.png'
+                fireballImage.src = './Image/fireball.png'
                 const fireball = new Sprite({
                     position:{
                         x: this.position.x,
@@ -202,7 +202,7 @@ class Monster extends Sprite{
                 break
                 case 'RazorLeaf':
                     const razorLeafImage = new Image()
-                    razorLeafImage.src = './image/razorleaf.png'
+                    razorLeafImage.src = './Image/razorleaf.png'
                     const razorLeaf = new Sprite({
                         position:{
                             x: enemy.position.x,
@@ -231,7 +231,7 @@ class Monster extends Sprite{
                     break
                     case 'RockThrow':
                         const rockThrowImage = new Image()
-                        rockThrowImage.src = './image/rockThrow.png'
+                        rockThrowImage.src = './Image/rockThrow.png'
                         const rockThrow = new Sprite({
                             position:{
                                 x: enemy.position.x-10,
@@ -260,7 +260,7 @@ class Monster extends Sprite{
                         break
                 case 'BearScratch':
                     const bearScratchImage = new Image()
-                    bearScratchImage.src = './image/bearScratch.png'
+                    bearScratchImage.src = './Image/bearScratch.png'
                     const bearScratch = new Sprite({
                         position:{
                             x: this.position.x,
@@ -275,7 +275,7 @@ class Monster extends Sprite{
                         scale: 2.7
                     })
                     const clawImage = new Image()
-                    clawImage.src = './image/claw.png'
+                    clawImage.src = './Image/claw.png'
                     const claw = new Sprite({
                         position:{
                             x: enemy.position.x,
@@ -305,7 +305,7 @@ class Monster extends Sprite{
                     break
                 case 'BodySlam':
                     const bodySlamImage = new Image()
-                    bodySlamImage.src = './image/bearJump.png'
+                    bodySlamImage.src = './Image/bearJump.png'
                     const  bodySlam = new Sprite({
                         position:{
                             x: this.position.x,
